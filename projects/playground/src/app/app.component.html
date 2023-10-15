@@ -1,3 +1,31 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+<div class="mx-auto max-w-full sm:px-6 lg:px-8">
+  <h1 class="text-4xl">Angular Avancé !</h1>
+  <pre>{{ form.value | json }}</pre>
+  <form #form="ngForm" (submit)="onSubmit(form)">
+    <div class="m-1">
+      <label for="email" class="sr-only">Email</label>
+      <input ngModel #email="ngModel" [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="email.touched && email.invalid" type="email" name="email" id="email"
+             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+             placeholder="you@example.com" required email>
+    </div>
+
+    <div class="m-1">
+      <label for="email" class="sr-only">Mot de passe</label>
+      <input ngModel type="password" name="password" id="password"
+             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+             placeholder="Mot de passe">
+    </div>
+
+    <div class="m-1">
+      <label for="email" class="sr-only">Confirmation du mot de passe</label>
+      <input ngModel type="password" name="confirm" id="confirm"
+             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+             placeholder="Confirmation du mot de passe">
+    </div>
+
+    <button type="submit"
+            class="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-1">
+      Inscription
+    </button>
+  </form>
+</div>
