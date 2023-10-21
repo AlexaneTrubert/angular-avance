@@ -11,6 +11,10 @@ export class AppComponent {
   emailInput?: ElementRef<HTMLInputElement>;
 
   onSubmit(form: NgForm) {
+    if(form.invalid)
+    {
+      return;
+    }
     console.log(form.value);
   }
 }

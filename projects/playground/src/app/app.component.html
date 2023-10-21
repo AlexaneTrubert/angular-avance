@@ -1,29 +1,38 @@
 <div class="mx-auto max-w-full sm:px-6 lg:px-8">
   <h1 class="text-4xl">Angular Avancé !</h1>
   <pre>{{ form.value | json }}</pre>
-  <form #form="ngForm" (submit)="onSubmit(form)">
+  Formulaire valide : {{ form.valid }}
+  <form #form="ngForm" [ngFormOptions]="{ updateOn : 'change'}" (submit)="onSubmit(form)">
     <div class="m-1">
       <label for="email" class="sr-only">Email</label>
-      <input ngModel #email="ngModel" [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="email.touched && email.invalid" type="email" name="email" id="email"
+      <input ngModel #email="ngModel" [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="email.touched && email.invalid" type="email" id="email" name="email"
              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
              placeholder="you@example.com" required email>
+      <p *ngIf="email.touched && email.hasError('required')"  class="mt-2 text-sm text-red-600" id="email-blank">L'adresse email est obligatoire</p>
+      <p *ngIf="email.touched && email.hasError('email')"  class="mt-2 text-sm text-red-600" id="email-error">L'adresse email est invalide</p>
     </div>
 
     <div class="m-1">
       <label for="email" class="sr-only">Mot de passe</label>
-      <input ngModel type="password" name="password" id="password"
+      <input #password="ngModel" required minlength="3" ngModel type="password" name="password" id="password"
+             [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="password.touched && password.invalid"
              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
              placeholder="Mot de passe">
+      <p *ngIf="password.touched && password.hasError('required')"  class="mt-2 text-sm text-red-600" id="password-blank">Le mot de passe est obligatoire</p>
+      <p *ngIf="password.touched && password.hasError('minlength')"  class="mt-2 text-sm text-red-600" id="password-too-short">Le mot de passe est trop court. Il doit faire plus de 3 caractères</p>
     </div>
 
     <div class="m-1">
       <label for="email" class="sr-only">Confirmation du mot de passe</label>
-      <input ngModel type="password" name="confirm" id="confirm"
+      <input #confirm="ngModel" required minlength="3" ngModel type="password" name="confirm" id="confirm"
+             [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="confirm.touched && confirm.invalid"
              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
              placeholder="Confirmation du mot de passe">
+      <p *ngIf="confirm.touched && confirm.hasError('required')"  class="mt-2 text-sm text-red-600" id="confirm-blank">La confirmation est obligatoire</p>
+      <p *ngIf="confirm.touched && confirm.hasError('minlength')"  class="mt-2 text-sm text-red-600" id="confirm-too-short">La confirmation est trop courte. Elle doit faire plus de 3 caractères</p>
     </div>
 
-    <button type="submit"
+    <button [disabled]="form.invalid" type="submit"
             class="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-1">
       Inscription
     </button>
