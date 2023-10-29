@@ -10,6 +10,8 @@ import { ColorPickerComponent } from './color-picker.component';
 import {ReactiveInscriptionComponent} from "./reactive-form/reactive-inscription.component";
 import {AppComponent} from "./app.component";
 import { RecipeComponent } from './RecipeComponent/recipe.component';
+import { MoviesComponent } from './movies/movies.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,12 +22,14 @@ import { RecipeComponent } from './RecipeComponent/recipe.component';
     UniqueEmailValidator,
     ConfirmPasswordValidator,
     ColorPickerComponent,
-    RecipeComponent
+    RecipeComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

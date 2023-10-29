@@ -1,0 +1,11 @@
+<div class="row movies">
+  <div class="col-4 mb-2 movie" *ngFor="let movie of movies">
+    <div class="card">
+      <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="" class="card-img-top" />
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.overview }}</p>
+      </div>
+    </div>
+  </div>
+</div>
