@@ -1,22 +1,27 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {ApiPopularResponse, Genres, Movies} from "./types";
+import {MoviesService} from "./movies.service";
 
 @Component({
   selector: 'movies',
   templateUrl: './movies.component.html',
   styles: []
 })
-export class MoviesComponent {
-  movies: any[] = [];
+export class MoviesComponent implements OnInit {
+  movies: Movies = [];
+  genres: Genres = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private service: MoviesService) {
   }
 
   ngOnInit(): void {
-    const request = this.http.get('https://api.themoviedb.org/3/movie/popular?api_key=287dad35f1314e7780e6f05f4bdeb3ef&language=fr-FR&page=1');
+    this.service
+      .getPopularMovies()
+      .subscribe((movies) => (this.movies = movies));
 
-    request.subscribe((response: any) => {
-      this.movies = response.results;
-    });
+    this.service
+      .getGenres()
+      .subscribe((genres) => (this.genres = genres));
   }
 }

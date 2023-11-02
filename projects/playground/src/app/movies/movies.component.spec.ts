@@ -1,29 +1,66 @@
 import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {MoviesComponent} from "./movies.component";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {MoviesService} from "./movies.service";
+import {of} from "rxjs";
 
 describe('MoviesComponent', () => {
   it('should show movies', async () => {
     await TestBed.configureTestingModule({
       declarations: [MoviesComponent],
       imports: [HttpClientTestingModule],
+      providers: [MoviesService]
     }).compileComponents();
 
-    const httpController = TestBed.inject(HttpTestingController);
+    const service = TestBed.inject(MoviesService);
+    const spy = spyOn(service, "getPopularMovies");
+    spy.and.returnValue(of([
+      {
+        title: 'Movie 1',
+        id: 1,
+        description: "",
+        rating: 10,
+        image: ''
+      },
+      {
+        title: 'Movie 2',
+        id: 2,
+        description: "",
+        rating: 10,
+        image: ''
+      },
+    ]));
 
     const fixture = TestBed.createComponent(MoviesComponent);
     fixture.detectChanges();
 
-    const request = httpController.expectOne('https://api.themoviedb.org/3/movie/popular?api_key=287dad35f1314e7780e6f05f4bdeb3ef&language=fr-FR&page=1');
-    request.flush({
-      results: [
-        { title: 'movie 1'}, { title: 'movie 2'}
-      ]
-    });
+    // On s'assure que des films apparaissent. On regarde si on a plusieurs div avec la class movie
+    expect(fixture.nativeElement.querySelectorAll('.movie').length).toBe(2);
+  });
 
+  it("Should show genres", async () => {
+    await TestBed.configureTestingModule({
+      declarations: [MoviesComponent],
+      imports: [HttpClientTestingModule],
+      providers: [MoviesService]
+    }).compileComponents();
+
+    const service = TestBed.inject(MoviesService);
+    const spy = spyOn(service, "getGenres");
+    spy.and.returnValue(of([
+      {
+        id: 1,
+        name: 'Action'
+      },
+      {
+        id: 2,
+        name: 'Science-Fiction'
+      }
+    ]));
+
+    const fixture = TestBed.createComponent(MoviesComponent);
     fixture.detectChanges();
 
-    // On s'assure que des films apparaissent. On regarde si on a plusieurs div avec la class movie
-    expect(fixture.nativeElement.querySelectorAll('.movie').length).toBeGreaterThan(0);
+    expect(fixture.nativeElement.querySelectorAll('.genres').length).toBe(2);
   });
 });
