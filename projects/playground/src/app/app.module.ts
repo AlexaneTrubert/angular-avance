@@ -10,6 +10,10 @@ import { ColorPickerComponent } from './color-picker.component';
 import {ReactiveInscriptionComponent} from "./reactive-form/reactive-inscription.component";
 import {AppComponent} from "./app.component";
 import { RecipeComponent } from './RecipeComponent/recipe.component';
+import { MoviesComponent } from './movies/movies.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {MoviesService} from "./movies/movies.service";
+import {MoviesKeyInterceptor} from "./movies/movies-key.interceptor";
 
 @NgModule({
   declarations: [
@@ -20,14 +24,20 @@ import { RecipeComponent } from './RecipeComponent/recipe.component';
     UniqueEmailValidator,
     ConfirmPasswordValidator,
     ColorPickerComponent,
-    RecipeComponent
+    RecipeComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [MoviesService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: MoviesKeyInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

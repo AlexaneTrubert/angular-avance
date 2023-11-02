@@ -1,0 +1,106 @@
+<div class="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+  <div class="w-full max-w-sm space-y-10">
+    <div>
+      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+           alt="Your Company">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your
+        account</h2>
+    </div>
+    <form [formGroup]="inscription" (submit)="onSubmit()" class="space-y-6">
+      <div class="relative -space-y-px rounded-md shadow-sm">
+        <div class="pointer-events-none absolute inset-0 z-10 rounded-md ring-1 ring-inset ring-gray-300"></div>
+        <div>
+          <label for="email-address" class="sr-only">Email address</label>
+          <input bannedEmail="test@test.com" uniqueEmail formControlName="email"
+                 [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="email.dirty && email.invalid"
+                 id="email-address" name="email" type="email" autocomplete="email" required
+                 class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                 placeholder="Email">
+          <p *ngIf="email.touched && email.hasError('required')" class="mt-2 text-sm text-red-600" id="email-required">
+            L'adresse email est obligatoire</p>
+          <p *ngIf="email.touched && email.hasError('email')" class="mt-2 text-sm text-red-600" id="email-error">
+            L'adresse email n'est pas valide</p>
+          <p *ngIf="email.touched && email.hasError('bannedEmail')" class="mt-2 text-sm text-red-600" id="email-banned">
+            L'adresse email est interdite</p>
+          <p *ngIf="email.touched && email.hasError('uniqueEmail')" class="mt-2 text-sm text-red-600" id="email-unique">
+            L'adresse email est déjà utilisée</p>
+          <p class="mt-2 text-sm text-yellow-600" id="email-waiting" *ngIf="email.pending">En cours de chargement</p>
+        </div>
+        <div confirmPassword formGroupName="security">
+          <div>
+            <label for="password" class="sr-only">Password</label>
+            <input formControlName="password"
+                   [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="password.dirty && password.invalid"
+                   id="password" name="password" type="password" autocomplete="current-password" required
+                   class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                   placeholder="Mot de passe" minlength="4">
+            <p *ngIf="password.touched && password.hasError('required')" class="mt-2 text-sm text-red-600"
+               id="password-required">Le mot de passe est obligatoire</p>
+            <p *ngIf="password.touched && password.hasError('minlength')" class="mt-2 text-sm text-red-600"
+               id="password-short">Le mot de passe doit faire au moins 4 caractères</p>
+          </div>
+          <div>
+            <label for="confirm" class="sr-only">Confirm</label>
+            <input formControlName="confirm"
+                   [class.text-red-900.ring-red-300.focus:ring-inset.focus:ring-red-500]="confirm.dirty && confirm.invalid"
+                   id="confirm" name="confirm" type="password" autocomplete="current-password" required
+                   class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                   placeholder="Confirmation du mot de passe">
+            <p *ngIf="confirm.touched && confirm.hasError('required')" class="mt-2 text-sm text-red-600"
+               id="confirm-required">La confirmation du mot de passe est obligatoire</p>
+            <p *ngIf="confirm.touched && confirm.hasError('confirmPassword')" class="mt-2 text-sm text-red-600"
+               id="confirmPassword-invalid">La confirmation du mot de passe n'est pas la même que le mot de passe</p>
+          </div>
+        </div>
+      </div>
+      <app-color-picker formControlName="favoriteColor"></app-color-picker>
+
+      <h3 class="mt-10 text-center text-1xl font-bold leading-9 tracking-tight text-gray-900">
+        Quels sont vos langages favoris ?
+        <button (click)="addLanguage()" type="button"
+                class="rounded-full bg-indigo-600 p-1.5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"/>
+          </svg>
+        </button>
+      </h3>
+
+      <p *ngIf="languages.touched && languages.hasError('mustHave2Languages')" class="mt-2 text-sm text-red-600"
+         id="language-invalid">Vous devez avoir 2 langages au minimum</p>
+      <div *ngIf="languages.controls.length === 0">
+        Vous n'avez pas ajoutez de langage. Cliquez sur le bouton si-dessus.
+      </div>
+      <div *ngFor="let group of languages.controls; let i = index"
+           [formGroup]="group"
+           class="columns-3">
+        <div>
+          <input type="text"
+                 class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                 placeholder="Nom du langage" formControlName="name">
+        </div>
+        <div>
+          <select formControlName="level" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <option value="debutant">Débutant(e)</option>
+            <option value="confirme">Confirmé(e)</option>
+          </select>
+        </div>
+        <div>
+          <button (click)="languages.removeAt(i)" type="button"
+                  class="rounded-full bg-indigo-600 p-1.5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <button
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          S'inscrire
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

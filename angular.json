@@ -25,7 +25,8 @@
               "projects/playground/src/assets"
             ],
             "styles": [
-              "projects/playground/src/styles.css"
+              "projects/playground/src/styles.css",
+              "node_modules/bootswatch/dist/lumen/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -87,7 +88,8 @@
               "projects/playground/src/assets"
             ],
             "styles": [
-              "projects/playground/src/styles.css"
+              "projects/playground/src/styles.css",
+              "node_modules/bootswatch/dist/lumen/bootstrap.min.css"
             ],
             "scripts": []
           }
@@ -116,7 +118,8 @@
               "projects/crm/src/assets"
             ],
             "styles": [
-              "projects/crm/src/styles.css"
+              "projects/crm/src/styles.css",
+              "node_modules/bootswatch/dist/lumen/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -178,7 +181,8 @@
               "projects/crm/src/assets"
             ],
             "styles": [
-              "projects/crm/src/styles.css"
+              "projects/crm/src/styles.css",
+              "node_modules/bootswatch/dist/lumen/bootstrap.min.css"
             ],
             "scripts": []
           }
