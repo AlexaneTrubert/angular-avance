@@ -3,6 +3,8 @@ import {HttpClientTestingModule, HttpTestingController} from "@angular/common/ht
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {MoviesKeyInterceptor} from "./movies-key.interceptor";
 
+const APIKEY = 'blah';
+
 describe("MoviesKeyInterceptor", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +30,7 @@ describe("MoviesKeyInterceptor", () => {
       }
     );
 
-    httpController.expectOne('https://api.themoviedb.org/3/movie/popular?api_key=287dad35f1314e7780e6f05f4bdeb3ef&language=fr-FR').flush({});
+    httpController.expectOne('https://api.themoviedb.org/3/movie/popular?api_key=' + APIKEY + '&language=fr-FR').flush({});
   });
 
   it("should use & as separator if needed", (done: DoneFn) => {
@@ -42,6 +44,6 @@ describe("MoviesKeyInterceptor", () => {
       }
     );
 
-    httpController.expectOne('https://api.themoviedb.org/3/movie/popular?page=1&api_key=287dad35f1314e7780e6f05f4bdeb3ef&language=fr-FR').flush({});
+    httpController.expectOne('https://api.themoviedb.org/3/movie/popular?page=1&api_key=' + APIKEY + '&language=fr-FR').flush({});
   });
 });
