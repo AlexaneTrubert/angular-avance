@@ -1,14 +1,16 @@
-<div class="mb-5">
-  <span class="bagde bg-light m-2 genres" *ngFor="let genre of genres">{{ genre.name }}</span>
-</div>
-<div class="row movies">
-  <div class="col-4 mb-2 movie" *ngFor="let movie of movies">
-    <div class="card">
-      <img src="{{ movie.image }}" alt="" class="card-img-top" />
-      <div class="card-body">
-        <h5 class="card-title">{{ movie.title }}</h5>
-        <p class="card-text">{{ movie.description }}</p>
+<ng-container *ngIf="genresAndMovies$ | async as data">
+  <div class="mb-5">
+    <span class="bagde bg-light m-2 genres" *ngFor="let genre of data.genres">{{ genre.name }}</span>
+  </div>
+  <div class="row movies">
+    <div class="col-4 mb-2 movie" *ngFor="let movie of data.movies">
+      <div class="card">
+        <img src="{{ movie.image }}" alt="" class="card-img-top"/>
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p>{{movie.description}}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

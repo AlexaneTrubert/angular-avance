@@ -4,16 +4,28 @@ export type Movie = {
   description: string;
   image: string;
   rating: number;
+  genres: number[];
 };
 
 export type Movies = Movie[];
+
+export type Genre = {
+  id: number;
+  name: string;
+};
+
+export type Genres = Genre[];
+
+export type ApiGenresResponse = {
+  genres: Genre[];
+};
 
 export type ApiPopularResponse = {
   page: number;
   results: ApiMovie[];
   total_pages: number;
   total_results: number;
-}
+};
 
 export type ApiMovie = {
   adult: boolean;
@@ -30,15 +42,4 @@ export type ApiMovie = {
   video: boolean;
   vote_average: number;
   vote_count: number;
-}
-
-export type Genre = {
-  id: number;
-  name: string;
-}
-
-export type Genres = Genre[];
-
-export type ApiGenresResponse = {
-  genres: Genres;
-}
+};
