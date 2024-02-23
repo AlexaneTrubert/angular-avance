@@ -3,7 +3,7 @@ import {HttpClientTestingModule, HttpTestingController} from "@angular/common/ht
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {MoviesKeyInterceptor} from "./movies-key.interceptor";
 
-const APIKEY = 'blah';
+const APIKEY = 'df1c4c6e0e83010fee5ab09e6e4d8faa';
 
 describe("MoviesKeyInterceptor", () => {
   beforeEach(() => {
