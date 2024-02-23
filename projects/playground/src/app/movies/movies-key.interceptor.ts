@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 
 export class MoviesKeyInterceptor  implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const API_KEY = 'mouh';
+    const API_KEY = 'blah';
 
     const params = 'api_key=' + API_KEY + '&language=fr-FR';
 
