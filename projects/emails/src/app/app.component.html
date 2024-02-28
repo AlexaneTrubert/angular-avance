@@ -7,15 +7,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a routerLink="/emails" class="nav-link" routerLinkActive="active">Mes messages</a></li>
+        <li class="nav-item" *ngIf="isAuthenticated$ | async"><a routerLink="/emails" class="nav-link"
+                                                                 routerLinkActive="active">Mes messages</a></li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a routerLink="/account/login" class="nav-link" routerLinkActive="active">Connexion</a></li>
-        <li class="nav-item"><a routerLink="/account/register" class="nav-link" routerLinkActive="active">Inscription</a></li>
+        <li class="nav-item"><a routerLink="/account/login" class="nav-link" routerLinkActive="active">Connexion</a>
+        </li>
+        <li class="nav-item"><a routerLink="/account/register" class="nav-link"
+                                routerLinkActive="active">Inscription</a></li>
+        <li class="nav-item">
+          <button class="btn btn-sm btn-danger" (click)="onLogout()">Déconnexion</button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<app-loading-bar></app-loading-bar>
 
 <div class="container pt-5">
   <router-outlet></router-outlet>

@@ -2,41 +2,27 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './user/register.component';
-import { LoginComponent } from './user/login.component';
-import { EmailsComponent } from './email/emails.component';
-import { EmailsListComponent } from './email/emails-list.component';
-import { EmailDetailsComponent } from './email/email-details.component';
-import { EmailCreationComponent } from './email/email-creation.component';
 import {RouterModule, Routes} from "@angular/router";
+import {AuthGuard} from "./auth.guard";
+import {AuthService} from "./user/auth.service";
+import { LoadingBarComponent } from './loading-bar.component';
 
 const routes: Routes = [
-  {path: 'account/register', component: RegisterComponent},
-  {path: 'account/login', component: LoginComponent},
-  {path: 'emails', component: EmailsComponent, children: [
-      {path: '', component: EmailsListComponent},
-      {path: 'create', component: EmailCreationComponent},
-      {path: ':type', component: EmailsListComponent},
-      {path: 'read/:id', component: EmailDetailsComponent}
-    ]},
-  {path: '', redirectTo: 'emails', pathMatch: 'full'}
+  {path: 'account', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
+  {path: 'emails', loadChildren: () => import('./email/email.module').then(m => m.EmailModule), canActivate: [AuthGuard]},
+  {path: '', redirectTo: 'emails', pathMatch: 'full'},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent,
-    EmailsComponent,
-    EmailsListComponent,
-    EmailDetailsComponent,
-    EmailCreationComponent
+    LoadingBarComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
