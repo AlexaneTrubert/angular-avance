@@ -1,3 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("bootswatch/dist/lumen/bootstrap.min.css");
