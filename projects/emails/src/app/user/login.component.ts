@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-login',
   template: `
     <h1>Connexion</h1>
-    <form>
+    <form (submit)="onSubmit()">
       <div class="form-group mb-2">
         <input
           type="email"
@@ -22,5 +23,9 @@ import { Component } from '@angular/core';
   ]
 })
 export class LoginComponent {
+  constructor(private auth: AuthService) { }
 
+  onSubmit() {
+    this.auth.login();
+  }
 }

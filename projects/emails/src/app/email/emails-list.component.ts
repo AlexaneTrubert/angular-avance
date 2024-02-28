@@ -35,36 +35,28 @@ import {map, Observable} from "rxjs";
 })
 export class EmailsListComponent implements OnInit {
   emailsAndTitle$?: Observable<{ emails: Email[], title: string }>
+  type?: string | null;
 
   constructor(private route: ActivatedRoute,
               private router: Router
               ) {}
 
   ngOnInit(): void {
-    this.emailsAndTitle$ = this.route.paramMap.pipe(
-      map(param => param.get('type')),
-      map(type => {
-        if (!type) {
+      this.emailsAndTitle$ = this.route.data.pipe(
+        map(data => {
           return {
-            emails: (FAKE_EMAILS_DATA as Email[]).filter(
-              (email) => email.status === 'INBOX'
-            ),
-            title: "Boite de réception"
-          }
-        }
-
-        return {
-          emails: (FAKE_EMAILS_DATA as Email[]).filter(
-            (email) => email.status === type?.toUpperCase()
-          ),
-          title: type === 'sent' ? "Emails envoyés" : "Corbeille"
-        }
-      })
-    )
-
+            emails: data['emails'] as Email[],
+            title: data['title'],
+          };
+        })
+      );
   }
 
   goToEmail(id: number) {
-    this.router.navigateByUrl(`/emails/read/${id}`)
+    if(!this.type) {
+      this.router.navigate(['read', id], {relativeTo: this.route})
+      return;
+    }
+    this.router.navigate(['../', 'read', id], {relativeTo: this.route})
   }
 }
